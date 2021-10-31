@@ -15,5 +15,8 @@ namespace MovieLibApp.Models
 
         [JsonProperty("results")]
         public List<Movie> Movies { get; set; }
+
+        public string Query { get; set; }
+
     }
 }

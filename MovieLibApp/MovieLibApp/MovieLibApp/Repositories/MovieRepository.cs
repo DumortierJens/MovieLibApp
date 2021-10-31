@@ -48,6 +48,31 @@ namespace MovieLibApp.Repositories
             }
         }
 
-        
+        public static async Task<MovieResult> SearchMovieAsync(string query, int pageId = 1)
+        {
+            string endpoint = "/search/movie";
+            string paramString = $"page={pageId}&query={query}";
+
+            using (HttpClient client = GetClient())
+            {
+                try
+                {
+                    string json = await client.GetStringAsync(GetURL(endpoint, paramString));
+
+                    if (json != null)
+                    {
+                        var result = JsonConvert.DeserializeObject<MovieResult>(json);
+                        result.Query = query;
+                        return result;
+                    }
+
+                    return new MovieResult();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }

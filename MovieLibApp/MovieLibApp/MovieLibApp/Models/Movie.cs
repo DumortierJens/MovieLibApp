@@ -16,7 +16,7 @@ namespace MovieLibApp.Models
         public string Description { get; set; }
 
         [JsonProperty("release_date")]
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         [JsonProperty("vote_average")]
         public double Rating { get; set; }
