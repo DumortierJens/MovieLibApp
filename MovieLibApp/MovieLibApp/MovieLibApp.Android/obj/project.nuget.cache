@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "sGFRzyS2BsP58+Wq39jVjfD6hjGQsGfrGs175JjQZSkjaGb4yIWR1s3GkuM94GLfgB5/eWE+Lv1YLF3yFwlUxw==",
+  "dgSpecHash": "EYTR+5R67oBOqyMdILdIvSHio3SvoK4JVNvl0UNtFAzqH+Nhpq6i0Tf32uJLxDPfH3LHppYz9ucnfm8ggHruiQ==",
   "success": true,
   "projectFilePath": "D:\\_SCHOOL\\2MCT_S3\\DEVPROG\\Project\\project-DumortierJens\\MovieLibApp\\MovieLibApp\\MovieLibApp.Android\\MovieLibApp.Android.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\jensd\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\jensd\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.androidx.activity\\1.1.0.5\\xamarin.androidx.activity.1.1.0.5.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.androidx.annotation\\1.1.0.8\\xamarin.androidx.annotation.1.1.0.8.nupkg.sha512",
