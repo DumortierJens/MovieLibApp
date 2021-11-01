@@ -53,8 +53,25 @@ namespace MovieLibApp
 
             // Favorite movies
             Debug.WriteLine("Favorite Movies");
-            MoviePage favoriteMovies = await MovieRepository.SearchMovieAsync(searchQuery);
+            int accountId = await MovieRepository.GetAccountId();
+            MoviePage favoriteMovies = await MovieRepository.GetFavoriteMoviesAsync(accountId);
             foreach (var item in favoriteMovies.Movies)
+            {
+                Debug.WriteLine(item.Title);
+            }
+
+            Debug.WriteLine("Add Favorite Movie");
+            await MovieRepository.UpdateMovieAsFavoriteAsync(accountId, searchMovieResult.Movies[0].Id, true);
+            MoviePage favoriteMovies1 = await MovieRepository.GetFavoriteMoviesAsync(accountId);
+            foreach (var item in favoriteMovies1.Movies)
+            {
+                Debug.WriteLine(item.Title);
+            }
+
+            Debug.WriteLine("Remove Favorite Movie");
+            await MovieRepository.UpdateMovieAsFavoriteAsync(accountId, searchMovieResult.Movies[0].Id, false);
+            MoviePage favoriteMovies2 = await MovieRepository.GetFavoriteMoviesAsync(accountId);
+            foreach (var item in favoriteMovies2.Movies)
             {
                 Debug.WriteLine(item.Title);
             }

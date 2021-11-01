@@ -86,7 +86,6 @@ namespace MovieLibApp.Repositories
             {
                 try
                 {
-                    Debug.WriteLine(GetURL(endpoint));
                     string json = await client.GetStringAsync(GetURL(endpoint));
 
                     if (json != null)
@@ -120,6 +119,32 @@ namespace MovieLibApp.Repositories
                         return JsonConvert.DeserializeObject<MoviePage>(json);
 
                     return new MoviePage();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public static async Task UpdateMovieAsFavoriteAsync(int accountId, int movieId, bool isFavorite)
+        {
+            string endpoint = $"/account/{accountId}/favorite";
+
+            using (HttpClient client = GetClient())
+            {
+                try
+                {
+                    string json = JsonConvert.SerializeObject(new { 
+                        media_type = "movie",
+                        media_id = movieId,
+                        favorite = isFavorite
+                    });
+                    HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var response = await client.PostAsync(GetURL(endpoint), content);
+                    if (!response.IsSuccessStatusCode)
+                        throw new Exception(response.ToString());
                 }
                 catch (Exception ex)
                 {
