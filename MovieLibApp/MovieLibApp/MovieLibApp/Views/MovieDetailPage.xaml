@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieLibApp.Views.MovieDetailPage">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+
+                <Image x:Name="imgBackdrop"
+                       HeightRequest="250"
+                       Aspect="AspectFill"/>
+
+                <StackLayout Padding="16, 24">
+
+                    <Label x:Name="lblTitle" 
+                           Margin="0, 0, 0, 8"
+                           FontSize="Large" 
+                           FontAttributes="Bold"
+                           TextColor="#000"/>
+
+                    <StackLayout Orientation="Horizontal" Margin="0, 0, 0, 8">
+
+                        <Label x:Name="lblReleaseYear"
+                           FontSize="Small"
+                           Margin="0, 0, 16, 0"/>
+
+                        <Label x:Name="lblRating" 
+                           FontSize="Small"/>
+
+                    </StackLayout>
+
+                    <Label x:Name="lblDescription" 
+                           Margin="0, 0, 0, 8"
+                           FontSize="Body"
+                           TextColor="#000"/>
+
+                </StackLayout>
+                
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+
+</ContentPage>

@@ -28,6 +28,15 @@ namespace MovieLibApp.Views
 
             // Events
             searchMovie.TextChanged += SearchMovie_TextChanged;
+            cvwMovies.SelectionChanged += CvwMovies_SelectionChanged;
+        }
+
+        private void CvwMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Movie selectedMovie = (Movie) (sender as CollectionView).SelectedItem;
+
+            if (selectedMovie != null)
+                Navigation.PushAsync(new MovieDetailPage(selectedMovie));
         }
 
         private void SearchMovie_TextChanged(object sender, TextChangedEventArgs e)
