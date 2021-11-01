@@ -27,7 +27,25 @@ namespace MovieLibApp.Models
         [JsonProperty("backdrop_path")]
         public string BackdropImagePath { get; set; }
 
-        public UriImageSource PosterImage => (UriImageSource)ImageSource.FromUri(new Uri($"https://image.tmdb.org/t/p/w500{PosterImagePath}"));
-        public UriImageSource BackdropImage => (UriImageSource)ImageSource.FromUri(new Uri($"https://image.tmdb.org/t/p/w500{BackdropImagePath}"));
+        public UriImageSource PosterImage {
+            get
+            {
+                if (string.IsNullOrEmpty(PosterImagePath))
+                    return (UriImageSource) ImageSource.FromUri(new Uri("https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg"));
+                else 
+                    return (UriImageSource) ImageSource.FromUri(new Uri($"https://image.tmdb.org/t/p/w500{PosterImagePath}"));
+            }
+        }
+
+        public UriImageSource BackdropImage
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(PosterImagePath))
+                    return (UriImageSource)ImageSource.FromUri(new Uri("https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg"));
+                else
+                    return (UriImageSource)ImageSource.FromUri(new Uri($"https://image.tmdb.org/t/p/w500{BackdropImagePath}"));
+            }
+        }
     }
 }

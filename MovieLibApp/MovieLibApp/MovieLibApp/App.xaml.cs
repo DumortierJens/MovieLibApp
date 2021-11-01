@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieLibApp.Views;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace MovieLibApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MovieOverviewPage());
         }
 
         protected override void OnStart()

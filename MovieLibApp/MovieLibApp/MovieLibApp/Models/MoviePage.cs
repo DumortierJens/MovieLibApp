@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MovieLibApp.Models
 {
-    public class MovieResult
+    public class MoviePage
     {
         [JsonProperty("page")]
         public int Page { get; set; }

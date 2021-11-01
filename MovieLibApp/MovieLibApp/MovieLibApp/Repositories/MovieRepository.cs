@@ -25,7 +25,7 @@ namespace MovieLibApp.Repositories
             return $"{_BASEURI}{endpoint}?api_key={_APIKEY}&{paramString}";
         }
 
-        public static async Task<MovieResult> GetPopularMoviesAsync(int pageId = 1)
+        public static async Task<MoviePage> GetPopularMoviesAsync(int pageId = 1)
         {
             string endpoint = "/movie/popular";
             string paramString = $"page={pageId}";
@@ -37,9 +37,9 @@ namespace MovieLibApp.Repositories
                     string json = await client.GetStringAsync(GetURL(endpoint, paramString));
 
                     if (json != null)
-                        return JsonConvert.DeserializeObject<MovieResult>(json);
+                        return JsonConvert.DeserializeObject<MoviePage>(json);
 
-                    return new MovieResult();
+                    return new MoviePage();
                 }
                 catch (Exception ex)
                 {
@@ -48,7 +48,7 @@ namespace MovieLibApp.Repositories
             }
         }
 
-        public static async Task<MovieResult> SearchMovieAsync(string query, int pageId = 1)
+        public static async Task<MoviePage> SearchMovieAsync(string query, int pageId = 1)
         {
             string endpoint = "/search/movie";
             string paramString = $"page={pageId}&query={query}";
@@ -61,12 +61,12 @@ namespace MovieLibApp.Repositories
 
                     if (json != null)
                     {
-                        var result = JsonConvert.DeserializeObject<MovieResult>(json);
-                        result.Query = query;
-                        return result;
+                        MoviePage moviePage = JsonConvert.DeserializeObject<MoviePage>(json);
+                        moviePage.Query = query;
+                        return moviePage;
                     }
 
-                    return new MovieResult();
+                    return new MoviePage();
                 }
                 catch (Exception ex)
                 {

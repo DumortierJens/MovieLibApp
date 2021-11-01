@@ -23,27 +23,27 @@ namespace MovieLibApp
         private async void TestMovieRepository()
         {
             // Popular movies
-            MovieResult popularMovieResult = await MovieRepository.GetPopularMoviesAsync();
+            MoviePage popularMovieResult = await MovieRepository.GetPopularMoviesAsync();
             foreach (var item in popularMovieResult.Movies)
             {
                 Debug.WriteLine(item.Title);
             }
 
-            MovieResult popularMovieResult2 = await MovieRepository.GetPopularMoviesAsync(2);
+            MoviePage popularMovieResult2 = await MovieRepository.GetPopularMoviesAsync(2);
             foreach (var item in popularMovieResult2.Movies)
             {
                 Debug.WriteLine(item.Title);
             }
 
-            // Search movies
+            // Search movie
             string searchQuery = "Furious 7";
-            MovieResult searchMovieResult = await MovieRepository.SearchMovieAsync(searchQuery);
+            MoviePage searchMovieResult = await MovieRepository.SearchMovieAsync(searchQuery);
             foreach (var item in searchMovieResult.Movies)
             {
                 Debug.WriteLine(item.Title);
             }
 
-            MovieResult searchMovieResult2 = await MovieRepository.SearchMovieAsync(searchMovieResult.Query, 2);
+            MoviePage searchMovieResult2 = await MovieRepository.SearchMovieAsync(searchMovieResult.Query, 2);
             foreach (var item in searchMovieResult2.Movies)
             {
                 Debug.WriteLine(item.Title);
