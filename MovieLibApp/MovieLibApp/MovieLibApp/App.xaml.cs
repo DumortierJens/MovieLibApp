@@ -11,8 +11,8 @@ namespace MovieLibApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
-            //MainPage = new NavigationPage(new MovieOverviewPage());
+            //MainPage = new MainPage();
+            MainPage = new NavigationPage(new FavoriteMoviePage());
         }
 
         protected override void OnStart()

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieLibApp.Views.FavoriteMoviePage"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Content>
+        <StackLayout Padding="16, 16, 16, 0">
+
+            <Label Text="My Favorite Movies"
+                   Margin="0, 0, 0, 24"
+                   FontSize="Title"
+                   FontAttributes="Bold"
+                   TextColor="Black"/>
+
+            <CollectionView x:Name="cvwMyFavoriteMovies" SelectionMode="Single">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="8, 0, 8, 16">
+
+                            <Frame CornerRadius="10" Padding="0">
+                                <Image Source="{Binding PosterImage}" Aspect="AspectFill" />
+                            </Frame>
+
+                            <Label Text="{Binding Title}"
+                                   FontSize="Small"
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
+
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>
