@@ -23,6 +23,7 @@ namespace MovieLibApp
         private async void TestMovieRepository()
         {
             // Popular movies
+            Debug.WriteLine("Popular Movies");
             MoviePage popularMovieResult = await MovieRepository.GetPopularMoviesAsync();
             foreach (var item in popularMovieResult.Movies)
             {
@@ -36,6 +37,7 @@ namespace MovieLibApp
             }
 
             // Search movie
+            Debug.WriteLine("Search Movie: Furious 7");
             string searchQuery = "Furious 7";
             MoviePage searchMovieResult = await MovieRepository.SearchMovieAsync(searchQuery);
             foreach (var item in searchMovieResult.Movies)
@@ -45,6 +47,14 @@ namespace MovieLibApp
 
             MoviePage searchMovieResult2 = await MovieRepository.SearchMovieAsync(searchMovieResult.Query, 2);
             foreach (var item in searchMovieResult2.Movies)
+            {
+                Debug.WriteLine(item.Title);
+            }
+
+            // Favorite movies
+            Debug.WriteLine("Favorite Movies");
+            MoviePage favoriteMovies = await MovieRepository.SearchMovieAsync(searchQuery);
+            foreach (var item in favoriteMovies.Movies)
             {
                 Debug.WriteLine(item.Title);
             }
