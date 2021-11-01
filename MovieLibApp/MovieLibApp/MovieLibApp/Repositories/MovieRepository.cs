@@ -152,5 +152,53 @@ namespace MovieLibApp.Repositories
                 }
             }
         }
+
+        public static async Task<Movie> GetMovieDetailsAsync(int movieId)
+        {
+            string endpoint = $"/movie/{movieId}";
+
+            using (HttpClient client = GetClient())
+            {
+                try
+                {
+                    string json = await client.GetStringAsync(GetURL(endpoint));
+
+                    if (json != null)
+                        return JsonConvert.DeserializeObject<Movie>(json);
+
+                    return new Movie();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public static async Task<Movie> GetMovieAccountDetailsAsync(Movie movie)
+        {
+            string endpoint = $"/movie/{movie.Id}/account_states";
+
+            using (HttpClient client = GetClient())
+            {
+                try
+                {
+                    string json = await client.GetStringAsync(GetURL(endpoint));
+
+                    if (json != null)
+                    {
+                        JObject jObject = JsonConvert.DeserializeObject<JObject>(json);
+                        JToken dataFavorite = jObject.SelectToken("favorite");
+                        movie.IsFavorite = dataFavorite.ToObject<bool>();
+                    }
+
+                    return movie;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }

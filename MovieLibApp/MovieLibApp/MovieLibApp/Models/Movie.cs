@@ -47,5 +47,8 @@ namespace MovieLibApp.Models
                     return (UriImageSource)ImageSource.FromUri(new Uri($"https://image.tmdb.org/t/p/w500{BackdropImagePath}"));
             }
         }
+
+        public bool IsFavorite { get; set; }
+
     }
 }
