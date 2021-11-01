@@ -86,7 +86,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icon_search.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MovieLibApp\MovieLibApp.csproj">
       <Project>{D3C874FA-DF75-492B-A0F5-0940ADA7F1DB}</Project>

@@ -14,12 +14,12 @@ using Xamarin.Forms.Xaml;
 namespace MovieLibApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MovieOverviewPage : ContentPage
+    public partial class SearchMoviePage : ContentPage
     {
         private readonly ObservableCollection<Movie> movies = new ObservableCollection<Movie>();
         private CancellationTokenSource searchCts = new CancellationTokenSource();
 
-        public MovieOverviewPage()
+        public SearchMoviePage()
         {
             InitializeComponent();
 
