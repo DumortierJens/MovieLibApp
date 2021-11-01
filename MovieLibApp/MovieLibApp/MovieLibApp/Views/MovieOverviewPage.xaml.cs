@@ -36,7 +36,7 @@ namespace MovieLibApp.Views
             Movie selectedMovie = (Movie) (sender as CollectionView).SelectedItem;
 
             if (selectedMovie != null)
-                Navigation.PushAsync(new MovieDetailPage(selectedMovie));
+                Navigation.PushAsync(new MovieDetailPage(selectedMovie.Id));
         }
 
         private void SearchMovie_TextChanged(object sender, TextChangedEventArgs e)

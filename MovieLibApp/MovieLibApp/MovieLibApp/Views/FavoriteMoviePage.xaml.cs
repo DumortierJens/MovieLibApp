@@ -22,21 +22,26 @@ namespace MovieLibApp.Views
         {
             InitializeComponent();
 
-            LoadMovies();
+            LoadPage();
         }
 
-        private async void LoadMovies()
+        private async void LoadPage()
         {
             accountId = await MovieRepository.GetAccountId();
 
-            MoviePage moviePage = await MovieRepository.GetFavoriteMoviesAsync(accountId);
-            foreach (var movie in moviePage.Movies)
-                movies.Add(movie);
+            await LoadMovies();
 
             cvwMyFavoriteMovies.ItemsSource = movies;
             cvwMyFavoriteMovies.EmptyView = "No movies found";
 
             AddEvents();
+        }
+
+        private async Task LoadMovies()
+        {
+            MoviePage moviePage = await MovieRepository.GetFavoriteMoviesAsync(accountId);
+            foreach (var movie in moviePage.Movies)
+                movies.Add(movie);
         }
 
         private void AddEvents()
@@ -46,13 +51,21 @@ namespace MovieLibApp.Views
 
         private void CvwMyFavoriteMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Movie selectedMovie = (Movie)(sender as CollectionView).SelectedItem;
+            Movie movie = (Movie)(sender as CollectionView).SelectedItem;
 
-            if (selectedMovie != null)
+            if (movie != null)
             {
-                Navigation.PushAsync(new MovieDetailPage(selectedMovie));
+                MovieDetailPage movieDetailPage = new MovieDetailPage(movie.Id);
+                movieDetailPage.Disappearing += MovieDetailPage_Disappearing;
+                Navigation.PushAsync(movieDetailPage);
                 (sender as CollectionView).SelectedItem = null;
             }
+        }
+
+        private void MovieDetailPage_Disappearing(object sender, EventArgs e)
+        {
+            movies.Clear();
+            LoadMovies();
         }
     }
 }

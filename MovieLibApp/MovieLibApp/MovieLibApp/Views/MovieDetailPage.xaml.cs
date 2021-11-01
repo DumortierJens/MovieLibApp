@@ -1,4 +1,5 @@
 ﻿using MovieLibApp.Models;
+using MovieLibApp.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,23 +14,47 @@ namespace MovieLibApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MovieDetailPage : ContentPage
     {
-        public Movie CurrentMovie;
+        private int accountId;
+        private Movie movie;
 
-        public MovieDetailPage(Movie movie)
+        public MovieDetailPage(int movieId)
         {
             InitializeComponent();
 
-            CurrentMovie = movie;
+            LoadMovie(movieId);
+        }
+
+        private async void LoadMovie(int movieId)
+        {
+            accountId = await MovieRepository.GetAccountId();
+
+            Movie movieDetails = await MovieRepository.GetMovieDetailsAsync(movieId);
+            movie = await MovieRepository.GetMovieAccountDetailsAsync(movieDetails);
+
+            ShowMovie();
+            AddEvents();
+        }
+
+        private void AddEvents()
+        {
+            tbiFavorite.Clicked += TbiFavorite_Clicked;
+        }
+
+        private async void TbiFavorite_Clicked(object sender, EventArgs e)
+        {
+            movie.IsFavorite = !movie.IsFavorite;
+            await MovieRepository.UpdateMovieAsFavoriteAsync(accountId, movie.Id, movie.IsFavorite);
             ShowMovie();
         }
 
         private void ShowMovie()
         {
-            imgBackdrop.Source = CurrentMovie.BackdropImage;
-            lblTitle.Text = CurrentMovie.Title;
-            lblDescription.Text = CurrentMovie.Description;
-            lblRating.Text = $"{CurrentMovie.Rating} / 10";
-            lblReleaseYear.Text = (CurrentMovie.ReleaseDate == null ? new DateTime(0, 0, 0) : (DateTime)CurrentMovie.ReleaseDate).Year.ToString();
+            tbiFavorite.IconImageSource = movie.IsFavorite ? "icon_favorite.png" : "icon_favorite_border.png";
+            imgBackdrop.Source = movie.BackdropImage;
+            lblTitle.Text = movie.Title;
+            lblDescription.Text = movie.Description;
+            lblRating.Text = $"{movie.Rating} / 10";
+            lblReleaseYear.Text = (movie.ReleaseDate == null ? new DateTime(0, 0, 0) : (DateTime)movie.ReleaseDate).Year.ToString();
         }
     }
 }
