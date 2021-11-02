@@ -5,8 +5,8 @@
              x:Class="MovieLibApp.AppShell">
     
     <TabBar>
-        <ShellContent x:Name="scSearch" Title="Search" Icon="icon_search.png" Route="SearchMoviePage" ContentTemplate="{DataTemplate views:SearchMoviePage}" />
-        <ShellContent x:Name="scFavorites" Title="Favorites" Icon="icon_favorite_border.png" Route="FavoriteMoviePage" ContentTemplate="{DataTemplate views:FavoriteMoviePage}" />
+        <ShellContent Title="Search" Icon="icon_search.png" Route="SearchMoviePage" ContentTemplate="{DataTemplate views:SearchMoviePage}" />
+        <ShellContent Title="Favorites" Icon="icon_favorite_border.png" Route="FavoriteMoviePage" ContentTemplate="{DataTemplate views:FavoriteMoviePage}" />
     </TabBar>
     
 </Shell>

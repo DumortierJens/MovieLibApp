@@ -40,7 +40,7 @@ namespace MovieLibApp.Views
         private async Task LoadMovies()
         {
             movies.Clear();
-            MoviePage moviePage = await MovieRepository.GetFavoriteMoviesAsync(accountId);
+            IMoviePage moviePage = await MovieRepository.GetFavoriteMoviesAsync(accountId);
             foreach (var movie in moviePage.Movies)
                 movies.Add(movie);
         }

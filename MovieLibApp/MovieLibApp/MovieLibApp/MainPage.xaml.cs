@@ -24,13 +24,13 @@ namespace MovieLibApp
         {
             // Popular movies
             Debug.WriteLine("Popular Movies");
-            MoviePage popularMovieResult = await MovieRepository.GetPopularMoviesAsync();
+            IMoviePage popularMovieResult = await MovieRepository.GetPopularMoviesAsync();
             foreach (var item in popularMovieResult.Movies)
             {
                 Debug.WriteLine(item.Title);
             }
 
-            MoviePage popularMovieResult2 = await MovieRepository.GetPopularMoviesAsync(2);
+            IMoviePage popularMovieResult2 = await MovieRepository.GetPopularMoviesAsync(2);
             foreach (var item in popularMovieResult2.Movies)
             {
                 Debug.WriteLine(item.Title);
@@ -39,13 +39,13 @@ namespace MovieLibApp
             // Search movie
             Debug.WriteLine("Search Movie: Furious 7");
             string searchQuery = "Furious 7";
-            MoviePage searchMovieResult = await MovieRepository.SearchMovieAsync(searchQuery);
+            SearchMoviePage searchMovieResult = await MovieRepository.SearchMovieAsync(searchQuery);
             foreach (var item in searchMovieResult.Movies)
             {
                 Debug.WriteLine(item.Title);
             }
 
-            MoviePage searchMovieResult2 = await MovieRepository.SearchMovieAsync(searchMovieResult.Query, 2);
+            IMoviePage searchMovieResult2 = await MovieRepository.SearchMovieAsync(searchMovieResult.Query, 2);
             foreach (var item in searchMovieResult2.Movies)
             {
                 Debug.WriteLine(item.Title);
@@ -54,7 +54,7 @@ namespace MovieLibApp
             // Favorite movies
             Debug.WriteLine("Favorite Movies");
             int accountId = await MovieRepository.GetAccountId();
-            MoviePage favoriteMovies = await MovieRepository.GetFavoriteMoviesAsync(accountId);
+            IMoviePage favoriteMovies = await MovieRepository.GetFavoriteMoviesAsync(accountId);
             foreach (var item in favoriteMovies.Movies)
             {
                 Debug.WriteLine(item.Title);
@@ -62,7 +62,7 @@ namespace MovieLibApp
 
             Debug.WriteLine("Add Favorite Movie");
             await MovieRepository.UpdateMovieAsFavoriteAsync(accountId, searchMovieResult.Movies[0].Id, true);
-            MoviePage favoriteMovies1 = await MovieRepository.GetFavoriteMoviesAsync(accountId);
+            IMoviePage favoriteMovies1 = await MovieRepository.GetFavoriteMoviesAsync(accountId);
             foreach (var item in favoriteMovies1.Movies)
             {
                 Debug.WriteLine(item.Title);
@@ -70,7 +70,7 @@ namespace MovieLibApp
 
             Debug.WriteLine("Remove Favorite Movie");
             await MovieRepository.UpdateMovieAsFavoriteAsync(accountId, searchMovieResult.Movies[0].Id, false);
-            MoviePage favoriteMovies2 = await MovieRepository.GetFavoriteMoviesAsync(accountId);
+            IMoviePage favoriteMovies2 = await MovieRepository.GetFavoriteMoviesAsync(accountId);
             foreach (var item in favoriteMovies2.Movies)
             {
                 Debug.WriteLine(item.Title);

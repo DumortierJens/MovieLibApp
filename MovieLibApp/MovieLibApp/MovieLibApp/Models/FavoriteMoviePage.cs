@@ -5,9 +5,8 @@ using System.Text;
 
 namespace MovieLibApp.Models
 {
-    public class MoviePage
+    public class FavoriteMoviePage : IMoviePage
     {
-        [JsonProperty("page")]
         public int Page { get; set; }
 
         [JsonProperty("total_pages")]
@@ -16,7 +15,6 @@ namespace MovieLibApp.Models
         [JsonProperty("results")]
         public List<Movie> Movies { get; set; }
 
-        public string Query { get; set; }
-
+        public int AccountId { get; set; }
     }
 }

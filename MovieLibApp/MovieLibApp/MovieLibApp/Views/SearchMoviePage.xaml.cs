@@ -62,7 +62,7 @@ namespace MovieLibApp.Views
 
         private async void GetMovies(string query = "")
         {
-            MoviePage currentMoviePage;
+            IMoviePage currentMoviePage;
 
             if (string.IsNullOrEmpty(query))
                 currentMoviePage = await MovieRepository.GetPopularMoviesAsync();
