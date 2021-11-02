@@ -23,20 +23,53 @@ namespace MovieLibApp.Views
         {
             InitializeComponent();
 
-            GetMovies();
-            cvwMovies.ItemsSource = movies;
+            LoadPage();
+        }
 
-            // Events
+        private async void LoadPage()
+        {
+            await LoadMovies();
+
+            cvwMovies.ItemsSource = movies;
+            cvwMovies.EmptyView = "No movies found";
+
+            AddEvents();
+        }
+
+        private async Task LoadMovies(string query = "")
+        {
+            IMoviePage currentMoviePage;
+            if (string.IsNullOrEmpty(query))
+            {
+                currentMoviePage = await MovieRepository.GetPopularMoviesAsync();
+                lblSubtitle.Text = "Popular Search";
+            }
+            else
+            {
+                currentMoviePage = await MovieRepository.SearchMovieAsync(query);
+                lblSubtitle.Text = "Search Results";
+            }
+
+            movies.Clear();
+            foreach (var movie in currentMoviePage.Movies)
+                movies.Add(movie);
+        }
+
+        private void AddEvents()
+        {
             searchMovie.TextChanged += SearchMovie_TextChanged;
             cvwMovies.SelectionChanged += CvwMovies_SelectionChanged;
         }
 
         private void CvwMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Movie selectedMovie = (Movie) (sender as CollectionView).SelectedItem;
+            Movie movie = (Movie)(sender as CollectionView).SelectedItem;
 
-            if (selectedMovie != null)
-                Navigation.PushAsync(new MovieDetailPage(selectedMovie.Id));
+            if (movie != null)
+            {
+                Navigation.PushAsync(new MovieDetailPage(movie.Id));
+                (sender as CollectionView).SelectedItem = null;
+            }
         }
 
         private void SearchMovie_TextChanged(object sender, TextChangedEventArgs e)
@@ -52,26 +85,12 @@ namespace MovieLibApp.Views
                         TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void SearchMovie(string query)
+        private async void SearchMovie(string query)
         {
             if (!string.IsNullOrEmpty(query))
-                GetMovies(query);
+                await LoadMovies(query);
             else
-                GetMovies();
-        }
-
-        private async void GetMovies(string query = "")
-        {
-            IMoviePage currentMoviePage;
-
-            if (string.IsNullOrEmpty(query))
-                currentMoviePage = await MovieRepository.GetPopularMoviesAsync();
-            else
-                currentMoviePage = await MovieRepository.SearchMovieAsync(query);
-
-            movies.Clear();
-            foreach (var movie in currentMoviePage.Movies)
-                movies.Add(movie);
+                await LoadMovies(query);
         }
     }
 }
