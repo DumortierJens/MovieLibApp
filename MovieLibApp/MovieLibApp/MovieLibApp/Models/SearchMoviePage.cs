@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using MovieLibApp.Repositories;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MovieLibApp.Models
 {
@@ -16,5 +18,19 @@ namespace MovieLibApp.Models
         public List<Movie> Movies { get; set; }
 
         public string Query { get; set; }
+
+        public async Task GetNextMoviesAsync()
+        {
+            if (Page < TotalPages)
+            {
+                Page++;
+                IMoviePage newMoviePage = await MovieRepository.SearchMovieAsync(Query, Page++);
+                Movies = newMoviePage.Movies;
+            }
+            else
+            {
+                Movies = new List<Movie>();
+            }
+        }
     }
 }

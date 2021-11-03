@@ -15,8 +15,8 @@ namespace MovieLibApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FavoriteMoviePage : ContentPage
     {
-        private int accountId;
         private readonly ObservableCollection<Movie> movies = new ObservableCollection<Movie>();
+        private IMoviePage currentMoviePage;
 
         public FavoriteMoviePage()
         {
@@ -27,28 +27,42 @@ namespace MovieLibApp.Views
 
         private async void LoadPage()
         {
-            accountId = await MovieRepository.GetAccountId();
-
             await LoadMovies();
 
-            cvwMyFavoriteMovies.ItemsSource = movies;
-            cvwMyFavoriteMovies.EmptyView = "No movies found";
+            cvwMovies.ItemsSource = movies;
+            cvwMovies.EmptyView = "No movies found";
 
             AddEvents();
         }
 
         private async Task LoadMovies()
         {
+            int accountId = await MovieRepository.GetAccountId();
+            currentMoviePage = await MovieRepository.GetFavoriteMoviesAsync(accountId);
+
             movies.Clear();
-            IMoviePage moviePage = await MovieRepository.GetFavoriteMoviesAsync(accountId);
-            foreach (var movie in moviePage.Movies)
+            AddMovies(currentMoviePage.Movies);
+        }
+
+        private void AddMovies(List<Movie> newMovies)
+        {
+            foreach (var movie in newMovies)
                 movies.Add(movie);
         }
 
         private void AddEvents()
         {
-            cvwMyFavoriteMovies.SelectionChanged += CvwMyFavoriteMovies_SelectionChanged;
+            cvwMovies.SelectionChanged += CvwMovies_SelectionChanged;
             this.Appearing += FavoriteMoviePage_Appearing;
+
+            cvwMovies.RemainingItemsThreshold = 5;
+            cvwMovies.RemainingItemsThresholdReached += CvwMovies_RemainingItemsThresholdReached; ;
+        }
+
+        private async void CvwMovies_RemainingItemsThresholdReached(object sender, EventArgs e)
+        {
+            await currentMoviePage.GetNextMoviesAsync();
+            AddMovies(currentMoviePage.Movies);
         }
 
         private async void FavoriteMoviePage_Appearing(object sender, EventArgs e)
@@ -56,7 +70,7 @@ namespace MovieLibApp.Views
             await LoadMovies();
         }
 
-        private void CvwMyFavoriteMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CvwMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Movie movie = (Movie)(sender as CollectionView).SelectedItem;
 

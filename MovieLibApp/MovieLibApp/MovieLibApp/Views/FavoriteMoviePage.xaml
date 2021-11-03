@@ -13,7 +13,7 @@
                    FontAttributes="Bold"
                    TextColor="Black"/>
 
-            <CollectionView x:Name="cvwMyFavoriteMovies" SelectionMode="Single">
+            <CollectionView x:Name="cvwMovies" SelectionMode="Single">
 
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="2"/>

@@ -18,6 +18,7 @@ namespace MovieLibApp.Views
     {
         private readonly ObservableCollection<Movie> movies = new ObservableCollection<Movie>();
         private CancellationTokenSource searchCts = new CancellationTokenSource();
+        private IMoviePage currentMoviePage;
 
         public SearchMoviePage()
         {
@@ -38,7 +39,6 @@ namespace MovieLibApp.Views
 
         private async Task LoadMovies(string query = "")
         {
-            IMoviePage currentMoviePage;
             if (string.IsNullOrEmpty(query))
             {
                 currentMoviePage = await MovieRepository.GetPopularMoviesAsync();
@@ -51,7 +51,12 @@ namespace MovieLibApp.Views
             }
 
             movies.Clear();
-            foreach (var movie in currentMoviePage.Movies)
+            AddMovies(currentMoviePage.Movies);
+        }
+
+        private void AddMovies(List<Movie> newMovies)
+        {
+            foreach (var movie in newMovies)
                 movies.Add(movie);
         }
 
@@ -59,6 +64,15 @@ namespace MovieLibApp.Views
         {
             searchMovie.TextChanged += SearchMovie_TextChanged;
             cvwMovies.SelectionChanged += CvwMovies_SelectionChanged;
+            
+            cvwMovies.RemainingItemsThreshold = 5;
+            cvwMovies.RemainingItemsThresholdReached += CvwMovies_RemainingItemsThresholdReached;
+        }
+
+        private async void CvwMovies_RemainingItemsThresholdReached(object sender, EventArgs e)
+        {
+            await currentMoviePage.GetNextMoviesAsync();
+            AddMovies(currentMoviePage.Movies);
         }
 
         private void CvwMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
