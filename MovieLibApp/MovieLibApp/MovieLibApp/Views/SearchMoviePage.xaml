@@ -37,7 +37,7 @@
                         <StackLayout Padding="8, 0, 8, 16">
 
                             <Frame CornerRadius="10" Padding="0">
-                                <Image Source="{Binding PosterImage}" Aspect="AspectFill" />
+                                <Image Source="{Binding PosterImage}" Aspect="AspectFill" HeightRequest="220"/>
                             </Frame>
 
                             <Label Text="{Binding Title}"
