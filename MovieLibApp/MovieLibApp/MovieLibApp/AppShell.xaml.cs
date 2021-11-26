@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieLibApp.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ namespace MovieLibApp
         public AppShell()
         {
             InitializeComponent();
+
+            Routing.RegisterRoute("noNetwork", typeof(NoNetworkPage));
         }
     }
 }

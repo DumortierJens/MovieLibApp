@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,9 +10,22 @@ namespace MovieLibApp
         public App()
         {
             InitializeComponent();
-
-            //MainPage = new MainPage();
+            
             MainPage = new AppShell();
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                Shell.Current.GoToAsync($"noNetwork").Wait();
+            }
+        }
+
+        private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                Shell.Current.GoToAsync($"noNetwork");
+            }
         }
 
         protected override void OnStart()

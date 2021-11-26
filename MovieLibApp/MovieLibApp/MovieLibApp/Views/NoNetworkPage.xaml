@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieLibApp.Views.NoNetworkPage"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+    
+    <ContentPage.Content>
+        <StackLayout Padding="16, 24">
+
+            <Label Text="No internet connection"
+                   FontSize="Title"
+                   FontAttributes="Bold"
+                   TextColor="Black"/>
+
+            <Label Text="Please check your internet connection"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>
