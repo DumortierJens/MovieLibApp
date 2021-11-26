@@ -7,21 +7,12 @@
     <ContentPage.Content>
         <StackLayout Padding="16, 16, 16, 0">
 
-            <Label Text="Find Your Movie"
-                   Margin="0, 0, 0, 24"
-                   FontSize="Title"
-                   FontAttributes="Bold"
-                   TextColor="Black"/>
-
-            <Frame BackgroundColor="LightGray"
-                   Margin="0, 0, 0, 24"
-                   CornerRadius="10"
-                   Padding="8">
-                <SearchBar x:Name="searchMovie" Placeholder="Search your movie..."/>
-            </Frame>
+            <SearchBar x:Name="searchMovie" 
+                       Placeholder="Search your movie..." 
+                       Margin="0, 0, 0, 24"/>
 
             <Label x:Name="lblSubtitle" 
-                   Margin="0, 0, 0, 24"
+                   Margin="0, 0, 0, 16"
                    FontSize="Subtitle"
                    FontAttributes="Bold"
                    TextColor="Black"/>
