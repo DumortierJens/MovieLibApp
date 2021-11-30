@@ -44,10 +44,10 @@ namespace MovieLibApp.Views
         {
             movie.IsFavorite = !movie.IsFavorite;
             await MovieRepository.UpdateMovieAsFavoriteAsync(accountId, movie.Id, movie.IsFavorite);
-            ShowMovie();
+            await ShowMovie();
         }
 
-        private void ShowMovie()
+        private async Task ShowMovie()
         {
             tbiFavorite.IconImageSource = movie.IsFavorite ? "icon_favorite.png" : "icon_favorite_border.png";
             imgBackdrop.Source = movie.BackdropImage;
@@ -55,6 +55,9 @@ namespace MovieLibApp.Views
             lblDescription.Text = movie.Description;
             rating.Value = movie.Rating / (float)2;
             lblReleaseYear.Text = (movie.ReleaseDate == null ? new DateTime(0, 0, 0) : (DateTime)movie.ReleaseDate).Year.ToString();
+            
+            MovieReview movieReview = await MovieReviewRepository.GetMovieReviewAsync(accountId, movie);
+            lblReview.Text = movieReview.Review;
         }
     }
 }

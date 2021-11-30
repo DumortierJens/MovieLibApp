@@ -12,8 +12,8 @@ namespace MovieLibApp.Repositories
 {
     public static class MovieRepository
     {
-        private static string _APIKEY = UserSecretsRepository.Settings["APIKEY"];
-        private static string _SESSIONID = UserSecretsRepository.Settings["SESSIONID"];
+        private static readonly string _APIKEY = UserSecretsRepository.Settings["APIKEY"];
+        private static readonly string _SESSIONID = UserSecretsRepository.Settings["SESSIONID"];
         private const string _BASEURI = "https://api.themoviedb.org/3";
 
         private static HttpClient GetClient()

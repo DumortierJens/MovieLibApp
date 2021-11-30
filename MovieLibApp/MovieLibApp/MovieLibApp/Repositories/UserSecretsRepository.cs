@@ -11,7 +11,7 @@ namespace MovieLibApp.Repositories
     public class UserSecretsRepository
     {
         private static UserSecretsRepository _instance;
-        private JObject _secrets;
+        private readonly JObject _secrets;
 
         // Default namespace of the project
         private const string Namespace = "MovieLibApp";
