@@ -10,7 +10,7 @@ namespace MovieLibApp.Repositories
 {
     public static class MovieReviewRepository
     {
-        private const string _BASEURI = "http://localhost:7071/api";
+        private const string _BASEURI = "http://192.168.1.51:7071/api";
 
         private static HttpClient GetClient()
         {
@@ -26,7 +26,7 @@ namespace MovieLibApp.Repositories
 
         public static async Task<MovieReview> GetMovieReviewAsync(int accountId, Movie movie)
         {
-            string endpoint = $"/reviews/movie/{movie.Id}?accountid={accountId}";
+            string endpoint = $"/reviews/{movie.Id}?accountid={accountId}";
 
             using (HttpClient client = GetClient())
             {
@@ -35,7 +35,7 @@ namespace MovieLibApp.Repositories
                     string json = await client.GetStringAsync(GetURL(endpoint));
 
                     if (json != null)
-                        return JsonConvert.DeserializeObject<MovieReview>(json);
+                        return JsonConvert.DeserializeObject<List<MovieReview>>(json)[0];
 
                     return new MovieReview();
                 }
