@@ -53,7 +53,7 @@ namespace MovieLibApp.Views
             imgBackdrop.Source = movie.BackdropImage;
             lblTitle.Text = movie.Title;
             lblDescription.Text = movie.Description;
-            lblRating.Text = $"{movie.Rating} / 10";
+            rating.Value = movie.Rating / (float)2;
             lblReleaseYear.Text = (movie.ReleaseDate == null ? new DateTime(0, 0, 0) : (DateTime)movie.ReleaseDate).Year.ToString();
         }
     }

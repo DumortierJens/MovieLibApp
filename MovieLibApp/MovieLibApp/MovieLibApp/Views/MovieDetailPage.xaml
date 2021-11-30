@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MovieLibApp.Views.MovieDetailPage">
+             x:Class="MovieLibApp.Views.MovieDetailPage"
+             xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="tbiFavorite"/>
@@ -17,22 +18,26 @@
 
                 <StackLayout Padding="16, 24">
 
+                    <StackLayout Orientation="Horizontal" Margin="0, 0, 0, 4">
+
+                        <Label x:Name="lblReleaseYear" 
+                               FontSize="Small"
+                               Margin="0, 0, 16, 0"
+                               VerticalOptions="Center"/>
+
+                        <rating:SfRating x:Name="rating" Precision="Half" ItemSize="16" ItemSpacing="8" ReadOnly="True" Margin="0" VerticalOptions="Center">
+                            <rating:SfRating.RatingSettings>
+                                <rating:SfRatingSettings RatedFill="Gold" UnRatedFill="LightGray" RatedStrokeWidth="0" UnRatedStrokeWidth="0" />
+                            </rating:SfRating.RatingSettings>
+                        </rating:SfRating>
+
+                    </StackLayout>
+
                     <Label x:Name="lblTitle" 
-                           Margin="0, 0, 0, 8"
+                           Margin="0, 0, 0, 4"
                            FontSize="Large" 
                            FontAttributes="Bold"
                            TextColor="#000"/>
-
-                    <StackLayout Orientation="Horizontal" Margin="0, 0, 0, 8">
-
-                        <Label x:Name="lblReleaseYear"
-                           FontSize="Small"
-                           Margin="0, 0, 16, 0"/>
-
-                        <Label x:Name="lblRating" 
-                           FontSize="Small"/>
-
-                    </StackLayout>
 
                     <Label x:Name="lblDescription" 
                            Margin="0, 0, 0, 8"
