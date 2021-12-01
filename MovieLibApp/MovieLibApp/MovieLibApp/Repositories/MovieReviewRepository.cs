@@ -10,7 +10,7 @@ namespace MovieLibApp.Repositories
 {
     public static class MovieReviewRepository
     {
-        private const string _BASEURI = "http://192.168.1.51:7071/api";
+        private const string _BASEURI = "https://movielibapp.azurewebsites.net/api";
 
         private static HttpClient GetClient()
         {
