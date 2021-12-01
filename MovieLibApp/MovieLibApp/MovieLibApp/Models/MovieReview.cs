@@ -8,6 +8,6 @@ namespace MovieLibApp.Models
     {
         public int MovieId { get; set; }
         public int AccountId { get; set; }
-        public string Review { get; set; } = "Write your review";
+        public string Review { get; set; }
     }
 }

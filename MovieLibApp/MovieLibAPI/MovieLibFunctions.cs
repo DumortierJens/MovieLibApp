@@ -139,7 +139,7 @@ namespace MovieLibAPI
                 CloudTable table = cloudTableClient.GetTableReference("reviews");
                 await table.CreateIfNotExistsAsync();
 
-                TableOperation insertOperation = TableOperation.Merge(movieReviewEntity);
+                TableOperation insertOperation = TableOperation.Replace(movieReviewEntity);
                 await table.ExecuteAsync(insertOperation);
 
                 return new OkObjectResult(movieReview);

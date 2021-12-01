@@ -30,6 +30,7 @@ namespace MovieLibApp.Views
 
             Movie movieDetails = await MovieRepository.GetMovieDetailsAsync(movieId);
             movie = await MovieRepository.GetMovieAccountDetailsAsync(movieDetails);
+            movie = await MovieReviewRepository.GetMovieReviewAsync(accountId, movie);
 
             ShowMovie();
             AddEvents();
@@ -38,16 +39,31 @@ namespace MovieLibApp.Views
         private void AddEvents()
         {
             tbiFavorite.Clicked += TbiFavorite_Clicked;
+            btnEditReview.Clicked += BtnEditReview_Clicked;
+        }
+
+        private void BtnEditReview_Clicked(object sender, EventArgs e)
+        {
+            var modalPage = new EditMovieReviewPage(accountId, movie);
+            Navigation.PushModalAsync(modalPage);
+            modalPage.Disappearing += ModalPage_Disappearing;
+        }
+
+        private void ModalPage_Disappearing(object sender, EventArgs e)
+        {
+            var modalPage = sender as EditMovieReviewPage;
+            movie.Review = modalPage.movieReview.Review;
+            ShowMovie();
         }
 
         private async void TbiFavorite_Clicked(object sender, EventArgs e)
         {
             movie.IsFavorite = !movie.IsFavorite;
             await MovieRepository.UpdateMovieAsFavoriteAsync(accountId, movie.Id, movie.IsFavorite);
-            await ShowMovie();
+            ShowMovie();
         }
 
-        private async Task ShowMovie()
+        private void ShowMovie()
         {
             tbiFavorite.IconImageSource = movie.IsFavorite ? "icon_favorite.png" : "icon_favorite_border.png";
             imgBackdrop.Source = movie.BackdropImage;
@@ -55,9 +71,8 @@ namespace MovieLibApp.Views
             lblDescription.Text = movie.Description;
             rating.Value = movie.Rating / (float)2;
             lblReleaseYear.Text = (movie.ReleaseDate == null ? new DateTime(0, 0, 0) : (DateTime)movie.ReleaseDate).Year.ToString();
-            
-            MovieReview movieReview = await MovieReviewRepository.GetMovieReviewAsync(accountId, movie);
-            lblReview.Text = movieReview.Review;
+            btnEditReview.Source = string.IsNullOrEmpty(movie.Review) ? "icon_add" : "icon_edit";
+            lblReview.Text = string.IsNullOrEmpty(movie.Review) ? "Add your review" : movie.Review;
         }
     }
 }

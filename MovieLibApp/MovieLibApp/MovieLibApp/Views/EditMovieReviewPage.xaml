@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieLibApp.Views.EditMovieReviewPage">
+    
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label Text="Write your review"
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   Margin="0, 0, 0, 4" />
+
+            <Editor x:Name="editor" 
+                    AutoSize="TextChanges" />
+
+            <Button x:Name="btnSave" 
+                    Text="Save your review" />
+
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>

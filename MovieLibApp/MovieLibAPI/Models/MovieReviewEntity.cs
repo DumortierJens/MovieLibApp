@@ -16,7 +16,9 @@ namespace MovieLibAPI.Models
         {
             this.PartitionKey = movieReview.AccountId.ToString();
             this.RowKey = movieReview.MovieId.ToString();
-            
+            this.ETag = "*";
+
+
             Review = movieReview.Review;
         }
 

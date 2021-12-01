@@ -24,7 +24,7 @@ namespace MovieLibApp.Repositories
             return $"{_BASEURI}{endpoint}";
         }
 
-        public static async Task<MovieReview> GetMovieReviewAsync(int accountId, Movie movie)
+        public static async Task<Movie> GetMovieReviewAsync(int accountId, Movie movie)
         {
             string endpoint = $"/reviews/{movie.Id}?accountid={accountId}";
 
@@ -35,9 +35,13 @@ namespace MovieLibApp.Repositories
                     string json = await client.GetStringAsync(GetURL(endpoint));
 
                     if (json != null)
-                        return JsonConvert.DeserializeObject<List<MovieReview>>(json)[0];
+                    {
+                        List<MovieReview> results = JsonConvert.DeserializeObject<List<MovieReview>>(json);
+                        if (results.Count > 0)
+                            movie.Review = results[0].Review;
+                    }
 
-                    return new MovieReview();
+                    return movie;
                 }
                 catch (Exception ex)
                 {
@@ -105,7 +109,7 @@ namespace MovieLibApp.Repositories
                     {
                         Content = content,
                         Method = HttpMethod.Delete,
-                        RequestUri = new Uri(endpoint)
+                        RequestUri = new Uri(GetURL(endpoint))
                     };
 
                     var response = await client.SendAsync(request);

@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieLibApp.Android", "MovieLibApp\MovieLibApp.Android\MovieLibApp.Android.csproj", "{B3F83226-5B13-4FC1-B031-8CACCD53A454}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieLibApp", "MovieLibApp\MovieLibApp\MovieLibApp.csproj", "{61455C91-BD06-40DB-BFED-2B5A22D7DE82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibApp", "MovieLibApp\MovieLibApp\MovieLibApp.csproj", "{61455C91-BD06-40DB-BFED-2B5A22D7DE82}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibAPI", "MovieLibAPI\MovieLibAPI.csproj", "{117DDC6B-4C8E-4A22-939C-D7F1F85DCB13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{61455C91-BD06-40DB-BFED-2B5A22D7DE82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61455C91-BD06-40DB-BFED-2B5A22D7DE82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61455C91-BD06-40DB-BFED-2B5A22D7DE82}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{117DDC6B-4C8E-4A22-939C-D7F1F85DCB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117DDC6B-4C8E-4A22-939C-D7F1F85DCB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117DDC6B-4C8E-4A22-939C-D7F1F85DCB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117DDC6B-4C8E-4A22-939C-D7F1F85DCB13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

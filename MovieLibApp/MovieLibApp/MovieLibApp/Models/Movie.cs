@@ -32,5 +32,7 @@ namespace MovieLibApp.Models
         public UriImageSource BackdropImage => (UriImageSource)ImageSource.FromUri(new Uri($"https://image.tmdb.org/t/p/w500{BackdropImagePath}"));
 
         public bool IsFavorite { get; set; }
+
+        public string Review { get; set; }
     }
 }
