@@ -1,4 +1,5 @@
-﻿// Github: https://github.com/ncarandini/XFUserSecrets
+﻿// Repository to get locally stored secrets
+// Link Github: https://github.com/ncarandini/XFUserSecrets
 
 using System;
 using System.Diagnostics;

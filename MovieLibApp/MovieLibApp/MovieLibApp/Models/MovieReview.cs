@@ -8,10 +8,7 @@ namespace MovieLibApp.Models
     {
         public MovieReview() { }
 
-        public MovieReview(int accountId)
-        {
-            AccountId = accountId;
-        }
+        public MovieReview(int accountId) { AccountId = accountId; }
 
         public int AccountId { get; set; }
         public string Review { get; set; } = "";

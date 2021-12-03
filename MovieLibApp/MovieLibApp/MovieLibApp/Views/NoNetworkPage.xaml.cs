@@ -15,9 +15,14 @@ namespace MovieLibApp.Views
         public NoNetworkPage()
         {
             InitializeComponent();
+
+            // Add event to check if the internet connection is changed
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
 
+        /// <summary>
+        /// If the internet connection changed and there is internet, go to the main page
+        /// </summary>
         private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
             if (e.NetworkAccess == NetworkAccess.Internet)
@@ -26,6 +31,9 @@ namespace MovieLibApp.Views
             }
         }
 
+        /// <summary>
+        /// Override the backbutton to prevent going back
+        /// </summary>
         protected override bool OnBackButtonPressed()
         {
             return true;

@@ -17,6 +17,7 @@ namespace MovieLibApp
         {
             InitializeComponent();
 
+            // Add no network page route
             Routing.RegisterRoute("noNetwork", typeof(NoNetworkPage));
         }
     }

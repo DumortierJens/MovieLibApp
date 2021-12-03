@@ -17,14 +17,14 @@ namespace MovieLibApp.Models
         [JsonProperty("results")]
         public List<Movie> Movies { get; set; }
 
-        public string Query { get; set; }
+        public string SearchQuery { get; set; }
 
         public async Task GetNextMoviesAsync()
         {
             if (Page < TotalPages)
             {
                 Page++;
-                IMoviePage newMoviePage = await MovieRepository.SearchMovieAsync(Query, Page++);
+                IMoviePage newMoviePage = await MovieRepository.SearchMovieAsync(SearchQuery, Page++);
                 Movies = newMoviePage.Movies;
             }
             else

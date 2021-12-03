@@ -25,60 +25,88 @@ namespace MovieLibApp.Views
             LoadPage();
         }
 
+        /// <summary>
+        /// Load the content and events for the page
+        /// </summary>
         private async void LoadPage()
         {
+            // Load the movies
             await LoadMovies();
 
+            // Add the movies to the collectionview
             cvwMovies.ItemsSource = movies;
             cvwMovies.EmptyView = "No movies found";
 
+            // Add events to the page
             AddEvents();
         }
 
+        /// <summary>
+        /// Load the favorite movies and add them to the movie collection
+        /// </summary>
         private async Task LoadMovies()
         {
+            // Get the favorite movies
             int accountId = await MovieRepository.GetAccountId();
             currentMoviePage = await MovieRepository.GetFavoriteMoviesAsync(accountId);
 
+            // Clear the collectionview and add the favorite movies
             movies.Clear();
             AddMovies(currentMoviePage.Movies);
         }
 
+        /// <summary>
+        /// Add each movie to the movie collection
+        /// </summary>
+        /// <param name="newMovies">List of movies</param>
         private void AddMovies(List<Movie> newMovies)
         {
             foreach (var movie in newMovies)
                 movies.Add(movie);
         }
 
+        /// <summary>
+        /// Add the events for the page
+        /// </summary>
         private void AddEvents()
         {
             cvwMovies.SelectionChanged += CvwMovies_SelectionChanged;
             this.Appearing += FavoriteMoviePage_Appearing;
-
-            cvwMovies.RemainingItemsThreshold = 5;
+            
+            cvwMovies.RemainingItemsThreshold = 5; 
             cvwMovies.RemainingItemsThresholdReached += CvwMovies_RemainingItemsThresholdReached; ;
         }
 
-        private async void CvwMovies_RemainingItemsThresholdReached(object sender, EventArgs e)
+        /// <summary>
+        /// Go to the seleted movie detail page
+        /// </summary>
+        private void CvwMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await currentMoviePage.GetNextMoviesAsync();
-            AddMovies(currentMoviePage.Movies);
+            Movie movie = (Movie)cvwMovies.SelectedItem;
+
+            if (movie != null)
+            {
+                Navigation.PushAsync(new MovieDetailPage(movie.Id));
+                cvwMovies.SelectedItem = null; // Deselect the selected movie
+            }
         }
 
+        /// <summary>
+        /// Reload the favorite movies when page is appearing
+        /// </summary>
         private async void FavoriteMoviePage_Appearing(object sender, EventArgs e)
         {
             await LoadMovies();
         }
 
-        private void CvwMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Movie movie = (Movie)(sender as CollectionView).SelectedItem;
 
-            if (movie != null)
-            {
-                Navigation.PushAsync(new MovieDetailPage(movie.Id));
-                (sender as CollectionView).SelectedItem = null;
-            }
+        /// <summary>
+        /// Get next page of movies and add them to the movie collection
+        /// </summary>
+        private async void CvwMovies_RemainingItemsThresholdReached(object sender, EventArgs e)
+        {
+            await currentMoviePage.GetNextMoviesAsync();
+            AddMovies(currentMoviePage.Movies);
         }
     }
 }

@@ -27,39 +27,60 @@ namespace MovieLibApp.Views
             LoadPage();
         }
 
+        /// <summary>
+        /// Load the content and events for the page
+        /// </summary>
         private async void LoadPage()
         {
+            // Load the movies
             await LoadMovies();
 
+            // Add the movies to the collectionview
             cvwMovies.ItemsSource = movies;
             cvwMovies.EmptyView = "No movies found";
 
+            // Add events to the page
             AddEvents();
         }
 
-        private async Task LoadMovies(string query = "")
+        /// <summary>
+        /// Load the popular/searched movies and add them to the movie collection
+        /// </summary>
+        /// <param name="searchQuery">Query for searching a movie</param>
+        private async Task LoadMovies(string searchQuery = "")
         {
-            if (string.IsNullOrEmpty(query))
+            // Popular movies
+            if (string.IsNullOrEmpty(searchQuery))
             {
                 currentMoviePage = await MovieRepository.GetPopularMoviesAsync();
                 lblSubtitle.Text = "Popular Search";
             }
+
+            // Search movies
             else
             {
-                currentMoviePage = await MovieRepository.SearchMovieAsync(query);
+                currentMoviePage = await MovieRepository.SearchMovieAsync(searchQuery);
                 lblSubtitle.Text = "Search Results";
             }
 
+            // Clear the collectionview and add the favorite movies
             movies.Clear();
             AddMovies(currentMoviePage.Movies);
         }
 
+        /// <summary>
+        /// Add each movie to the movie collection
+        /// </summary>
+        /// <param name="newMovies">List of movies</param>
         private void AddMovies(List<Movie> newMovies)
         {
             foreach (var movie in newMovies)
                 movies.Add(movie);
         }
 
+        /// <summary>
+        /// Add the events for the page
+        /// </summary>
         private void AddEvents()
         {
             searchMovie.TextChanged += SearchMovie_TextChanged;
@@ -69,42 +90,44 @@ namespace MovieLibApp.Views
             cvwMovies.RemainingItemsThresholdReached += CvwMovies_RemainingItemsThresholdReached;
         }
 
-        private async void CvwMovies_RemainingItemsThresholdReached(object sender, EventArgs e)
-        {
-            await currentMoviePage.GetNextMoviesAsync();
-            AddMovies(currentMoviePage.Movies);
-        }
-
-        private void CvwMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Movie movie = (Movie)(sender as CollectionView).SelectedItem;
-
-            if (movie != null)
-            {
-                Navigation.PushAsync(new MovieDetailPage(movie.Id));
-                (sender as CollectionView).SelectedItem = null;
-            }
-        }
-
+        /// <summary>
+        /// Search the movie if the searchbar text changed
+        /// and cancel the previous search task if timespan < 500ms
+        /// </summary>
         private void SearchMovie_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string query = searchMovie.Text;
+            string searchQuery = searchMovie.Text;
 
-            Interlocked.Exchange(ref searchCts, new CancellationTokenSource()).Cancel(); // cancel the previous search task if not already executed
-            Task.Delay(TimeSpan.FromMilliseconds(500), searchCts.Token) // if no keystroke occurs, carry on after 500ms
+            Interlocked.Exchange(ref searchCts, new CancellationTokenSource()).Cancel(); // Cancel the previous search task if not already executed
+            Task.Delay(TimeSpan.FromMilliseconds(500), searchCts.Token) // If no keystroke occurs, carry on after 500ms
                     .ContinueWith(
-                        delegate { SearchMovie(query); }, // Pass the changed text to the SearchMovie function
+                        delegate { _ = LoadMovies(searchQuery); }, // Search the movie 
                         CancellationToken.None,
                         TaskContinuationOptions.OnlyOnRanToCompletion,
                         TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private async void SearchMovie(string query)
+        /// <summary>
+        /// Go to the seleted movie detail page
+        /// </summary>
+        private void CvwMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(query))
-                await LoadMovies(query);
-            else
-                await LoadMovies(query);
+            Movie movie = (Movie)cvwMovies.SelectedItem;
+
+            if (movie != null)
+            {
+                Navigation.PushAsync(new MovieDetailPage(movie.Id));
+                cvwMovies.SelectedItem = null;
+            }
+        }
+
+        /// <summary>
+        /// Load next movie page if remaining items threshhold is reached
+        /// </summary>
+        private async void CvwMovies_RemainingItemsThresholdReached(object sender, EventArgs e)
+        {
+            await currentMoviePage.GetNextMoviesAsync();
+            AddMovies(currentMoviePage.Movies);
         }
     }
 }

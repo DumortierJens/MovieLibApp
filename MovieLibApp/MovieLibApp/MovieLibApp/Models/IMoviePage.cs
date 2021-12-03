@@ -11,6 +11,9 @@ namespace MovieLibApp.Models
         int TotalPages { get; set; }
         List<Movie> Movies { get; set; }
 
+        /// <summary>
+        /// Get next movie page
+        /// </summary>
         Task GetNextMoviesAsync();
     }
 }
