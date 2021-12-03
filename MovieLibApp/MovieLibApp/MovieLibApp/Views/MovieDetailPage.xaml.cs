@@ -44,15 +44,15 @@ namespace MovieLibApp.Views
 
         private void BtnEditReview_Clicked(object sender, EventArgs e)
         {
-            var modalPage = new EditMovieReviewPage(accountId, movie);
-            Navigation.PushModalAsync(modalPage);
-            modalPage.Disappearing += ModalPage_Disappearing;
+            var page = new EditMovieReviewPage(movie);
+            Navigation.PushAsync(page);
+            page.Disappearing += Page_Disappearing;
         }
 
-        private void ModalPage_Disappearing(object sender, EventArgs e)
+        private void Page_Disappearing(object sender, EventArgs e)
         {
-            var modalPage = sender as EditMovieReviewPage;
-            movie.Review = modalPage.movieReview.Review;
+            var page = sender as EditMovieReviewPage;
+            movie.MovieReview = page.MovieReview;
             ShowMovie();
         }
 
@@ -71,8 +71,8 @@ namespace MovieLibApp.Views
             lblDescription.Text = movie.Description;
             rating.Value = movie.Rating / (float)2;
             lblReleaseYear.Text = (movie.ReleaseDate == null ? new DateTime(0, 0, 0) : (DateTime)movie.ReleaseDate).Year.ToString();
-            btnEditReview.Source = string.IsNullOrEmpty(movie.Review) ? "icon_add" : "icon_edit";
-            lblReview.Text = string.IsNullOrEmpty(movie.Review) ? "Add your review" : movie.Review;
+            btnEditReview.Source = string.IsNullOrEmpty(movie.MovieReview.Review) ? "icon_add" : "icon_edit";
+            lblReview.Text = string.IsNullOrEmpty(movie.MovieReview.Review) ? "Write your review" : movie.MovieReview.Review;
         }
     }
 }

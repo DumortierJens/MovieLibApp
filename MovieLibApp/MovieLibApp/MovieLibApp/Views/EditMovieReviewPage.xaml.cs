@@ -15,18 +15,15 @@ namespace MovieLibApp.Views
     public partial class EditMovieReviewPage : ContentPage
     {
         private readonly Movie movie;
-        public MovieReview movieReview;
+        private ToolbarItem btnDelete;
+        public MovieReview MovieReview;
 
-        public EditMovieReviewPage(int accountId, Movie movie)
+        public EditMovieReviewPage(Movie movie)
         {
             InitializeComponent();
 
             this.movie = movie;
-            movieReview = new MovieReview()
-            {
-                AccountId = accountId,
-                MovieId = movie.Id
-            };
+            MovieReview = movie.MovieReview;
             LoadMovieReviewEditor();
         }
 
@@ -39,27 +36,54 @@ namespace MovieLibApp.Views
         private void AddEvents()
         {
             btnSave.Clicked += BtnSave_Clicked;
+            btnCancel.Clicked += BtnCancel_Clicked;
         }
 
-        private async void BtnSave_Clicked(object sender, EventArgs e)
+        private void BtnSave_Clicked(object sender, EventArgs e)
         {
-            movieReview.Review = editor.Text;
+            SaveMovieReview();
+        }
 
-            if (string.IsNullOrEmpty(movie.Review))
-                await MovieReviewRepository.AddMovieReviewAsync(movieReview);
+        private void BtnCancel_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
+        }
 
-            else if (!string.IsNullOrEmpty(movieReview.Review))
-                await MovieReviewRepository.UpdateMovieReviewAsync(movieReview);
+        private async void SaveMovieReview(bool delete = false)
+        {
+            string oldReview = MovieReview.Review;
+            MovieReview.Review = delete ? "" : editor.Text;
+
+            if (string.IsNullOrEmpty(oldReview) && !delete)
+                await MovieReviewRepository.AddMovieReviewAsync(movie.Id, MovieReview);
+
+            else if (!string.IsNullOrEmpty(MovieReview.Review) && !delete)
+                await MovieReviewRepository.UpdateMovieReviewAsync(movie.Id, MovieReview);
 
             else
-                await MovieReviewRepository.DeleteMovieReviewAsync(movieReview);
+                await MovieReviewRepository.DeleteMovieReviewAsync(movie.Id, MovieReview);
 
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         private void ShowReview()
         {
-            editor.Text = movie.Review;
+            editor.Text = MovieReview.Review;
+            if (!string.IsNullOrEmpty(MovieReview.Review))
+            {
+                btnDelete = new ToolbarItem()
+                {
+                    StyleId = "btnDelete",
+                    IconImageSource = ImageSource.FromFile("icon_delete.png"),
+                };
+                this.ToolbarItems.Add(btnDelete);
+                btnDelete.Clicked += BtnDelete_Clicked;
+            }
+        }
+
+        private void BtnDelete_Clicked(object sender, EventArgs e)
+        {
+            SaveMovieReview(delete: true);
         }
     }
 }

@@ -1,21 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MovieLibApp.Views.EditMovieReviewPage">
-    
+             x:Class="MovieLibApp.Views.EditMovieReviewPage"
+             Shell.TabBarIsVisible="False">
+
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="16">
 
             <Label Text="Write your review"
                    FontSize="Large"
                    FontAttributes="Bold"
+                   TextColor="Black"
                    Margin="0, 0, 0, 4" />
 
             <Editor x:Name="editor" 
-                    AutoSize="TextChanges" />
+                    AutoSize="TextChanges"
+                    Margin="0, 0, 0, 8" />
 
             <Button x:Name="btnSave" 
-                    Text="Save your review" />
+                    Text="Save your review"
+                    Margin="0, 0, 0, 4" />
+
+            <Button x:Name="btnCancel" 
+                    Text="Cancel"
+                    Margin="0" />
 
         </StackLayout>
     </ContentPage.Content>

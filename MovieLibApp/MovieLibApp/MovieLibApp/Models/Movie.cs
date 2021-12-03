@@ -33,6 +33,6 @@ namespace MovieLibApp.Models
 
         public bool IsFavorite { get; set; }
 
-        public string Review { get; set; }
+        public MovieReview MovieReview { get; set; }
     }
 }

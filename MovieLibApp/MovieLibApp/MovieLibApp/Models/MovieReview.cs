@@ -6,8 +6,14 @@ namespace MovieLibApp.Models
 {
     public class MovieReview
     {
-        public int MovieId { get; set; }
+        public MovieReview() { }
+
+        public MovieReview(int accountId)
+        {
+            AccountId = accountId;
+        }
+
         public int AccountId { get; set; }
-        public string Review { get; set; }
+        public string Review { get; set; } = "";
     }
 }

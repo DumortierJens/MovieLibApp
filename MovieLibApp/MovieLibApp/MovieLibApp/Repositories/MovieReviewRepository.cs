@@ -34,11 +34,12 @@ namespace MovieLibApp.Repositories
                 {
                     string json = await client.GetStringAsync(GetURL(endpoint));
 
+                    movie.MovieReview = new MovieReview(accountId);
                     if (json != null)
                     {
                         List<MovieReview> results = JsonConvert.DeserializeObject<List<MovieReview>>(json);
                         if (results.Count > 0)
-                            movie.Review = results[0].Review;
+                            movie.MovieReview = results[0];
                     }
 
                     return movie;
@@ -50,7 +51,7 @@ namespace MovieLibApp.Repositories
             }
         }
 
-        public static async Task AddMovieReviewAsync(MovieReview movieReview)
+        public static async Task AddMovieReviewAsync(int movieId, MovieReview movieReview)
         {
             string endpoint = $"/reviews";
 
@@ -58,7 +59,11 @@ namespace MovieLibApp.Repositories
             {
                 try
                 {
-                    string json = JsonConvert.SerializeObject(movieReview);
+                    string json = JsonConvert.SerializeObject(new { 
+                        movieId = movieId,
+                        accountId = movieReview.AccountId,
+                        review = movieReview.Review
+                    });
                     HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                     var response = await client.PostAsync(GetURL(endpoint), content);
@@ -72,7 +77,7 @@ namespace MovieLibApp.Repositories
             }
         }
 
-        public static async Task UpdateMovieReviewAsync(MovieReview movieReview)
+        public static async Task UpdateMovieReviewAsync(int movieId, MovieReview movieReview)
         {
             string endpoint = $"/reviews";
 
@@ -80,7 +85,12 @@ namespace MovieLibApp.Repositories
             {
                 try
                 {
-                    string json = JsonConvert.SerializeObject(movieReview);
+                    string json = JsonConvert.SerializeObject(new
+                    {
+                        movieId = movieId,
+                        accountId = movieReview.AccountId,
+                        review = movieReview.Review
+                    });
                     HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                     var response = await client.PutAsync(GetURL(endpoint), content);
@@ -94,7 +104,7 @@ namespace MovieLibApp.Repositories
             }
         }
 
-        public static async Task DeleteMovieReviewAsync(MovieReview movieReview)
+        public static async Task DeleteMovieReviewAsync(int movieId, MovieReview movieReview)
         {
             string endpoint = $"/reviews";
 
@@ -102,7 +112,12 @@ namespace MovieLibApp.Repositories
             {
                 try
                 {
-                    string json = JsonConvert.SerializeObject(movieReview);
+                    string json = JsonConvert.SerializeObject(new
+                    {
+                        movieId = movieId,
+                        accountId = movieReview.AccountId,
+                        review = movieReview.Review
+                    });
                     HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                     HttpRequestMessage request = new HttpRequestMessage
