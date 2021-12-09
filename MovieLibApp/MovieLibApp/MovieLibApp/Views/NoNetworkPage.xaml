@@ -10,8 +10,7 @@
 
             <Label Text="No internet connection"
                    FontSize="Title"
-                   FontAttributes="Bold"
-                   TextColor="Black"/>
+                   FontAttributes="Bold"/>
 
             <Label Text="Please check your internet connection"/>
 

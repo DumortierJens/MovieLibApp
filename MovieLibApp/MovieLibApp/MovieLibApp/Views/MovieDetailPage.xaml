@@ -23,7 +23,6 @@
                         <Label x:Name="lblReleaseYear" 
                                FontSize="Small"
                                Margin="0, 0, 16, 0"
-                               TextColor="Black"
                                VerticalOptions="Center"/>
 
                         <rating:SfRating x:Name="rating" Precision="Half" ItemSize="16" ItemSpacing="8" ReadOnly="True" Margin="0" VerticalOptions="Center">
@@ -37,34 +36,30 @@
                     <Label x:Name="lblTitle" 
                            Margin="0, 0, 0, 4"
                            FontSize="Title" 
-                           FontAttributes="Bold"
-                           TextColor="Black"/>
+                           FontAttributes="Bold"/>
 
                     <Label x:Name="lblDescription" 
                            Margin="0, 0, 0, 8"
-                           FontSize="Body"
-                           TextColor="Black"/>
+                           FontSize="Body"/>
 
                     <StackLayout Orientation="Horizontal" Margin="0, 0, 0, 4">
 
                         <Label Text="My review"
                                 Margin="0, 0, 0, 4"
                                 FontSize="Subtitle" 
-                                FontAttributes="Bold"
-                                TextColor="Black"/>
+                                FontAttributes="Bold"/>
 
                         <ImageButton x:Name="btnEditReview"
                                      WidthRequest="24" 
                                      HeightRequest="24" 
                                      HorizontalOptions="EndAndExpand" 
-                                     BackgroundColor="Transparent"/>
+                                     BackgroundColor="Transparent" />
 
                     </StackLayout>
 
                     <Label x:Name="lblReview"
                            Margin="0, 0, 0, 8"
-                           FontSize="Body"
-                           TextColor="Black"/>
+                           FontSize="Body"/>
 
                 </StackLayout>
                 

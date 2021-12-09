@@ -8,10 +8,9 @@
         <StackLayout Padding="16, 16, 16, 0">
 
             <Label Text="My Favorite Movies"
-                   Margin="0, 0, 0, 24"
-                   FontSize="Title"
-                   FontAttributes="Bold"
-                   TextColor="Black"/>
+                   Margin="0, 0, 0, 8"
+                   FontSize="Subtitle"
+                   FontAttributes="Bold"/>
 
             <CollectionView x:Name="cvwMovies" SelectionMode="Single">
 
@@ -21,7 +20,7 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="8, 0, 8, 16">
+                        <StackLayout Padding="8" Margin="0, 0, 0, 8">
 
                             <Frame CornerRadius="10" Padding="0">
                                 <Image Source="{Binding PosterImage}" Aspect="AspectFill"  HeightRequest="220"/>
@@ -29,8 +28,7 @@
 
                             <Label Text="{Binding Title}"
                                    FontSize="Small"
-                                   FontAttributes="Bold"
-                                   TextColor="Black"/>
+                                   FontAttributes="Bold"/>
 
                         </StackLayout>
                     </DataTemplate>
