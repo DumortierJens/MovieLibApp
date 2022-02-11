@@ -7,7 +7,7 @@ When opening the app, you can view a list of all your favorite movies, popular m
 
 You can find a **[demo video](https://github.com/DumortierJens/MovieLibApp/blob/master/movielibapp.mp4 "movielibapp.mp4")** in the root folder.
 
-### What dit I use?
+### What did I use?
 
 * For creating the app, I used **Xamarin Forms**
 
